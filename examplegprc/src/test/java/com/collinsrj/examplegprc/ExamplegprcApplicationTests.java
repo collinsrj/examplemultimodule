@@ -1,3 +1,6 @@
+/*
+ * Copyright 2024 Collins
+ */
 package com.collinsrj.examplegprc;
 
 import org.junit.jupiter.api.Test;
@@ -6,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ExamplegprcApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+  @Test
+  void contextLoads() {}
 }
