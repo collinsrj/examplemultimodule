@@ -9,8 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.collinsrj.exampleservice.model.Task;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Repository
 public interface TaskRepository extends ReactiveMongoRepository<Task, String> {
   Flux<Task> findByAuthor(String author);
+
+  Mono<Task> findByIdAndAuthor(String id, String author);
+
+  Mono<Void> deleteByIdAndAuthor(String id, String author);
 }
