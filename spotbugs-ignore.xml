@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
-    <Match>
-        <Class name="com.collinsrj.exampleservice.controller.TaskController" />
-        <Bug code="EI2" />
-    </Match>
-    <Match>
-        <Class name="com.collinsrj.exampleweb.controller.TaskController" />
+    <Match>        
         <Bug code="EI2" />
     </Match>
 </FindBugsFilter>
