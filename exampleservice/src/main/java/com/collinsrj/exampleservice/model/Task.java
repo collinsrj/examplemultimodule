@@ -1,11 +1,13 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleservice.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tasks")
@@ -16,6 +18,10 @@ public class Task {
   private LocalDateTime dueDate;
   private String author;
   private TaskStatus status;
+
+  @CreatedDate private LocalDateTime createdAt;
+
+  @LastModifiedDate private LocalDateTime updatedAt;
 
   public enum TaskStatus {
     TODO,
@@ -70,5 +76,21 @@ public class Task {
 
   public void setStatus(TaskStatus status) {
     this.status = status;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

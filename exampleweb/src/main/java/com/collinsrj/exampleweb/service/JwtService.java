@@ -1,8 +1,9 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleweb.service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class JwtService {
   private long jwtExpiration;
 
   private SecretKey getSigningKey() {
-    return Keys.hmacShaKeyFor(secretKey.getBytes());
+    return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
   }
 
   public String generateToken(UserDetails userDetails) {

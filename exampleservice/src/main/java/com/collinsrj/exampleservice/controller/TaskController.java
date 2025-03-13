@@ -1,54 +1,55 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleservice.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.collinsrj.exampleservice.dto.TaskDTO;
-import com.collinsrj.exampleservice.model.Task;
+import com.collinsrj.exampleservice.dto.TaskResponseDTO;
 import com.collinsrj.exampleservice.service.TaskService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/tasks")
+@Validated
+@RequiredArgsConstructor
+@Slf4j
 public class TaskController {
   private final TaskService taskService;
 
-  @Autowired
-  public TaskController(TaskService taskService) {
-    this.taskService = taskService;
-  }
-
   @GetMapping
-  public Flux<Task> getAllTasks() {
-    return taskService.getAllTasks();
+  public Flux<TaskResponseDTO> getAllTasks() {
+    return taskService.getAllTasks().map(TaskResponseDTO::fromEntity);
   }
 
   @GetMapping("/{id}")
-  public Mono<Task> getTaskById(@PathVariable String id) {
-    return taskService.getTaskById(id);
+  public Mono<TaskResponseDTO> getTaskById(@PathVariable String id) {
+    return taskService.getTaskById(id).map(TaskResponseDTO::fromEntity);
   }
 
   @GetMapping("/author/{author}")
-  public Flux<Task> getTasksByAuthor(@PathVariable String author) {
-    return taskService.getTasksByAuthor(author);
+  public Flux<TaskResponseDTO> getTasksByAuthor(@PathVariable String author) {
+    return taskService.getTasksByAuthor(author).map(TaskResponseDTO::fromEntity);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Mono<Task> createTask(@Valid @RequestBody TaskDTO taskDTO) {
-    return taskService.createTask(taskDTO.toEntity());
+  public Mono<TaskResponseDTO> createTask(@Valid @RequestBody TaskDTO taskDTO) {
+    return taskService.createTask(taskDTO.toEntity()).map(TaskResponseDTO::fromEntity);
   }
 
   @PutMapping("/{id}")
-  public Mono<Task> updateTask(@PathVariable String id, @Valid @RequestBody TaskDTO taskDTO) {
-    return taskService.updateTask(id, taskDTO.toEntity());
+  public Mono<TaskResponseDTO> updateTask(
+      @PathVariable String id, @Valid @RequestBody TaskDTO taskDTO) {
+    return taskService.updateTask(id, taskDTO.toEntity()).map(TaskResponseDTO::fromEntity);
   }
 
   @DeleteMapping("/{id}")

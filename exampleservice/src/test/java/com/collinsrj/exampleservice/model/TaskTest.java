@@ -1,6 +1,6 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleservice.model;
 
 import static org.junit.jupiter.api.Assertions.*;

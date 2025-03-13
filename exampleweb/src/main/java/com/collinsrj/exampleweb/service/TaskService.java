@@ -1,7 +1,9 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleweb.service;
+
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class TaskService {
   private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
+  private static final String REQUEST_ID_HEADER = "X-Request-ID";
   private final WebClient webClient;
   private final JwtService jwtService;
 
@@ -108,9 +111,12 @@ public class TaskService {
   }
 
   public Mono<Task> createTask(Task task) {
+    String requestId = UUID.randomUUID().toString();
+    logger.debug("Creating task with request ID: {}", requestId);
     return webClient
         .post()
         .uri("/tasks")
+        .header(REQUEST_ID_HEADER, requestId)
         .bodyValue(task)
         .retrieve()
         .bodyToMono(Task.class)

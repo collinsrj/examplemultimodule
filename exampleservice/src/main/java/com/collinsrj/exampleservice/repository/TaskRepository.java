@@ -1,6 +1,6 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleservice.repository;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

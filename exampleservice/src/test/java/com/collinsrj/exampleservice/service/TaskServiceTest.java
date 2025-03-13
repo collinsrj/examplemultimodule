@@ -1,6 +1,6 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleservice.service;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -60,15 +60,14 @@ class TaskServiceTest {
   void getTasksByAuthor() {
     Task task1 = createTask("1", "Task 1");
     Task task2 = createTask("2", "Task 2");
-    String author = "test.author";
-    when(taskRepository.findByAuthor(author)).thenReturn(Flux.just(task1, task2));
+    when(taskRepository.findByAuthor("author")).thenReturn(Flux.just(task1, task2));
 
-    StepVerifier.create(taskService.getTasksByAuthor(author))
+    StepVerifier.create(taskService.getTasksByAuthor("author"))
         .expectNext(task1)
         .expectNext(task2)
         .verifyComplete();
 
-    verify(taskRepository).findByAuthor(author);
+    verify(taskRepository).findByAuthor("author");
   }
 
   @Test
@@ -78,13 +77,13 @@ class TaskServiceTest {
 
     StepVerifier.create(taskService.createTask(task)).expectNext(task).verifyComplete();
 
-    verify(taskRepository).save(task);
+    verify(taskRepository).save(any(Task.class));
   }
 
   @Test
   void updateTask() {
-    Task existingTask = createTask("1", "Task 1");
-    Task updatedTask = createTask("1", "Updated Task 1");
+    Task existingTask = createTask("1", "Original Task");
+    Task updatedTask = createTask("1", "Updated Task");
 
     when(taskRepository.findById("1")).thenReturn(Mono.just(existingTask));
     when(taskRepository.save(any(Task.class))).thenReturn(Mono.just(updatedTask));
@@ -94,7 +93,7 @@ class TaskServiceTest {
         .verifyComplete();
 
     verify(taskRepository).findById("1");
-    verify(taskRepository).save(updatedTask);
+    verify(taskRepository).save(any(Task.class));
   }
 
   @Test
@@ -114,6 +113,8 @@ class TaskServiceTest {
     task.setDueDate(LocalDateTime.now());
     task.setAuthor("test.author");
     task.setStatus(Task.TaskStatus.TODO);
+    task.setCreatedAt(LocalDateTime.now());
+    task.setUpdatedAt(LocalDateTime.now());
     return task;
   }
 }

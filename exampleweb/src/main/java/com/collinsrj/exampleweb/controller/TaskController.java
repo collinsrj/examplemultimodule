@@ -1,6 +1,6 @@
 /*
- * Copyright 2024 Collins
- */
+                                * Copyright 2024 Collins
+                                */
 package com.collinsrj.exampleweb.controller;
 
 import org.springframework.stereotype.Controller;
@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import com.collinsrj.exampleweb.model.Task;
 import com.collinsrj.exampleweb.service.TaskService;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping("/tasks")
+@RequiredArgsConstructor
+@Slf4j
 public class TaskController {
   private final TaskService taskService;
-
-  public TaskController(TaskService taskService) {
-    this.taskService = taskService;
-  }
 
   @GetMapping
   public Mono<String> listTasks(Model model) {
